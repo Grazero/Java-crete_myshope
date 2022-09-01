@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="categorydays" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d228902-4f99-4d3a-856e-30859dde2f79">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="cateday" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cated" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     cart.`INID` AS cart_INID,
+     cart.`Product_Name` AS cart_Product_Name,
+     cart.`Category` AS cart_Category,
+     cart.`serial_no` AS cart_serial_no,
+     cart.`qty` AS cart_qty,
+     cart.`Unit_Price` AS cart_Unit_Price,
+     cart.`Total_Price` AS cart_Total_Price,
+     cart.`date` AS cart_date
+FROM
+     `cart` cart
+WHERE
+     date = $P{cateday}&&Category=$P{cated}]]>
+	</queryString>
+	<field name="cart_INID" class="java.lang.String"/>
+	<field name="cart_Product_Name" class="java.lang.String"/>
+	<field name="cart_Category" class="java.lang.String"/>
+	<field name="cart_serial_no" class="java.lang.String"/>
+	<field name="cart_qty" class="java.lang.Integer"/>
+	<field name="cart_Unit_Price" class="java.lang.String"/>
+	<field name="cart_Total_Price" class="java.lang.String"/>
+	<field name="cart_date" class="java.sql.Date"/>
+	<variable name="QTY" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{cart_qty}]]></variableExpression>
+	</variable>
+	<variable name="Total" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[Double.valueOf($F{cart_qty})*Double.valueOf($F{cart_Unit_Price})]]></variableExpression>
+	</variable>
+	<group name="my">
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement style="Detail" x="410" y="3" width="80" height="15" uuid="598c24ff-b6a5-493a-a133-324410ee232f"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cart_Unit_Price}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="252" y="3" width="145" height="15" uuid="3fe361e3-bc19-490e-8634-ee0efd6b9a16"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cart_serial_no}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="513" y="3" width="42" height="15" uuid="0a8b287e-9d25-4fa0-8473-84ffb42f4a3d"/>
+					<textElement>
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cart_date}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="85" y="3" width="153" height="15" uuid="d298807a-cb84-4a18-936f-26dacf343090"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cart_Category}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="0" y="4" width="69" height="15" uuid="7eb2cf16-c7a0-4244-92e9-24e3ffd08d4a"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cart_INID}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<textField>
+					<reportElement x="397" y="5" width="60" height="15" uuid="ab0ebb60-f373-4d2a-8080-106548afc85c"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{QTY}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="310" y="5" width="87" height="15" uuid="1dda5f93-a893-4fa8-b7e9-e2f08459d495"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[QTY : ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="310" y="26" width="87" height="15" uuid="147e11bf-9819-4c27-acf0-0a6d605917dd"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Times New Roman"/>
+					</textElement>
+					<text><![CDATA[Total Amount : ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="459" y="26" width="45" height="15" uuid="1a964a12-c6d8-46fa-8886-59549066cdec"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Baht.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="459" y="5" width="59" height="15" uuid="ce02470c-0b21-4d5e-9ec9-d89f3558d487"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Amounts.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="397" y="26" width="60" height="15" uuid="f2355613-f700-4330-9470-f181f2e99377"/>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="105" splitType="Stretch">
+			<staticText>
+				<reportElement style="SubTitle" x="-1" y="68" width="334" height="22" uuid="1a7b1e08-282b-4dc7-aa04-e8f9fd2a1aa4"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Category Reprot Per Day Per Category]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="457" y="69" width="92" height="20" uuid="c7d779a7-3588-47ff-8f0f-224961c63239"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="255" y="4" width="300" height="64" uuid="75904257-6863-431c-ba54-18cf77f446c4"/>
+				<imageExpression><![CDATA["Logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="24" width="252" height="43" forecolor="#000000" uuid="fb7bf0dd-ffd4-49b9-a4fe-72f0ed299ea4"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Tekton Pro Ext"/>
+				</textElement>
+				<text><![CDATA[Loffer Shop  Ltd.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="2bb82617-cb05-4fa1-ab0c-eb0ac78260fd"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="409" y="20" width="81" height="15" uuid="374d9099-f134-4b35-ab4a-14de83292f60"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Unit Price]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="525" y="21" width="30" height="15" uuid="4f31e658-f959-4022-8fca-1f17c8a1c967"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="252" y="20" width="145" height="15" uuid="3c312bc1-9422-4a0c-99e9-b7bfc4010bf6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Serial No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="20" width="69" height="15" uuid="f57840fd-c36b-42c6-a2df-0c78c049a184"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[INVOICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="85" y="20" width="153" height="15" uuid="c3ea2e39-4bbc-4403-b588-c61ca1a3746f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="-32" width="555" height="1" uuid="618593b1-73b4-4852-b643-7d59679a272d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="e3455e14-b28d-4ec5-b0e0-0465cb9c6b56"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="25c49a5c-6a64-44dd-b6e5-d9878ffb9d23"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="bd63356c-52f0-4653-b2e0-4170226d9eab"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
